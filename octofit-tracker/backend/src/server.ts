@@ -98,9 +98,10 @@ app.get('/api/workouts/', async (req: Request, res: Response) => {
   await sendCollectionResponse(res, 'workouts', async () => Workout.find({}).lean());
 });
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Octofit Tracker Backend server running on ${apiBaseUrl}`);
   console.log(`Environment: ${process.env.NODE_ENV ?? 'development'}`);
 });
 
+export { app, server, apiBaseUrl, PORT };
 export default app;
