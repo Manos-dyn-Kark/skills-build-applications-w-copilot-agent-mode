@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { getApiBaseUrl, normalizeApiResponse } from '../utils/api';
 
 export default function Users() {
   const [users, setUsers] = useState([]);
@@ -7,10 +6,11 @@ export default function Users() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    const baseUrl = getApiBaseUrl();
-    const url = `${baseUrl}/api/users/`;
+    const apiUrl = import.meta.env.VITE_CODESPACE_NAME
+      ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/users/`
+      : 'http://localhost:8000/api/users/';
 
-    fetch(url)
+    fetch(apiUrl)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`Request failed with status ${response.status}`);
@@ -18,7 +18,7 @@ export default function Users() {
         return response.json();
       })
       .then((payload) => {
-        const results = normalizeApiResponse(payload);
+        const results = Array.isArray(payload) ? payload : payload?.data ?? [];
         setUsers(results);
         setLoading(false);
       })

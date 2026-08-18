@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { getApiBaseUrl, normalizeApiResponse } from '../utils/api';
 
 export default function Activities() {
   const [activities, setActivities] = useState([]);
@@ -7,8 +6,11 @@ export default function Activities() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    const baseUrl = getApiBaseUrl();
-    fetch(`${baseUrl}/api/activities/`)
+    const apiUrl = import.meta.env.VITE_CODESPACE_NAME
+      ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/activities/`
+      : 'http://localhost:8000/api/activities/';
+
+    fetch(apiUrl)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`Request failed with status ${response.status}`);
@@ -16,7 +18,7 @@ export default function Activities() {
         return response.json();
       })
       .then((payload) => {
-        const results = normalizeApiResponse(payload);
+        const results = Array.isArray(payload) ? payload : payload?.data ?? [];
         setActivities(results);
         setLoading(false);
       })

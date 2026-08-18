@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { getApiBaseUrl, normalizeApiResponse } from '../utils/api';
 
 export default function Workouts() {
   const [workouts, setWorkouts] = useState([]);
@@ -7,8 +6,11 @@ export default function Workouts() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    const baseUrl = getApiBaseUrl();
-    fetch(`${baseUrl}/api/workouts/`)
+    const apiUrl = import.meta.env.VITE_CODESPACE_NAME
+      ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/workouts/`
+      : 'http://localhost:8000/api/workouts/';
+
+    fetch(apiUrl)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`Request failed with status ${response.status}`);
@@ -16,7 +18,7 @@ export default function Workouts() {
         return response.json();
       })
       .then((payload) => {
-        const results = normalizeApiResponse(payload);
+        const results = Array.isArray(payload) ? payload : payload?.data ?? [];
         setWorkouts(results);
         setLoading(false);
       })
