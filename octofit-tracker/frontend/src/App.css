@@ -1,0 +1,35 @@
+.app-shell {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f8f9fa 0%, #eef4ff 100%);
+}
+
+.navbar {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.nav-link {
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.card {
+  overflow: hidden;
+}
+
+.table th,
+.table td {
+  vertical-align: middle;
+}
+
+.list-group-item {
+  padding: 1rem 1.25rem;
+}
+
+.main-title {
+  letter-spacing: -0.04em;
+}
+
