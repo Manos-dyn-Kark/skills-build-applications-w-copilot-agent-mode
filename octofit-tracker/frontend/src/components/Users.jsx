@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getApiBaseUrl } from '../utils/api';
+import { getApiBaseUrl, normalizeApiResponse } from '../utils/api';
 
 export default function Users() {
   const [users, setUsers] = useState([]);
@@ -18,7 +18,7 @@ export default function Users() {
         return response.json();
       })
       .then((payload) => {
-        const results = Array.isArray(payload) ? payload : payload.data ?? [];
+        const results = normalizeApiResponse(payload);
         setUsers(results);
         setLoading(false);
       })

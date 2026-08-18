@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getApiBaseUrl } from '../utils/api';
+import { getApiBaseUrl, normalizeApiResponse } from '../utils/api';
 
 export default function Teams() {
   const [teams, setTeams] = useState([]);
@@ -16,7 +16,7 @@ export default function Teams() {
         return response.json();
       })
       .then((payload) => {
-        const results = Array.isArray(payload) ? payload : payload.data ?? [];
+        const results = normalizeApiResponse(payload);
         setTeams(results);
         setLoading(false);
       })
