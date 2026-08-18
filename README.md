@@ -19,3 +19,21 @@ The logic tier for the Octofit Tracker app is in `octofit-tracker/backend` and r
 
 The API exposes the main collection routes under `/api/` for users, teams, activities, leaderboard, and workouts.
 
+## Octofit Tracker frontend
+
+The presentation tier for the Octofit Tracker app is in `octofit-tracker/frontend`.
+
+Set `VITE_CODESPACE_NAME` in a local `.env.local` file when running in GitHub Codespaces, for example:
+
+```bash
+VITE_CODESPACE_NAME=my-codespace-name
+```
+
+The app will automatically use:
+
+```text
+https://${VITE_CODESPACE_NAME}-8000.app.github.dev/api/[component]/
+```
+
+When `VITE_CODESPACE_NAME` is not defined, it safely falls back to `http://localhost:8000/api/[component]/` without producing `https://undefined-8000...` URLs.
+
